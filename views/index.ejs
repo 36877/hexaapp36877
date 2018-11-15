@@ -366,6 +366,7 @@
 	function endChat() {
 		$("#chatbox").hide("slow");
 		socket.emit('unsubscribe', {uId : uId, userName : userName});
+		socket.emit('userWaitingOnline', {});
 	}
 	
 	function setUserProfile() {

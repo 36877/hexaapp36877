@@ -400,13 +400,26 @@
 	
 	socket.on('userWaitingOnline1', function(data){
 		//alert('users list updated');
-		document.getElementById('usersOnline').innerHTML += '<li class="list-group-item list-group-item-action" onclick="selectUserForConversation()" id="'+data.uId+'"><a href="#"><span class="glyphicon glyphicon-user"></span>'+data.userName+'</a></li>';
-		document.getElementById('waitingUsersList').innerHTML = ''+ data.totalWaitingUsers;
+		var customersLength = data.customers.length;
+		document.getElementById('usersOnline').innerHTML = '';
+		
+		for(var i=0; i < customersLength; i++){
+			document.getElementById('usersOnline').innerHTML += '<li class="list-group-item list-group-item-action" onclick="selectUserForConversation()" id="'+data.customers[i].uId+'"><a href="#"><span class="glyphicon glyphicon-user"></span>'+data.customers[i].userName+'</a></li>';
+			document.getElementById('waitingUsersList').innerHTML = ''+ data.totalWaitingUsers;
+		}
 	});
 	
 	socket.on('userLeft', function(data) {
-		$('#'+data.uId).remove();
-		document.getElementById('waitingUsersList').innerHTML = ''+ data.totalWaitingUsers;
+		//$('#'+data.uId).remove();
+		//document.getElementById('waitingUsersList').innerHTML = ''+ data.totalWaitingUsers;
+		
+		var customersLength = data.customers.length;
+		document.getElementById('usersOnline').innerHTML = '';
+		
+		for(var i=0; i < customersLength; i++){
+			document.getElementById('usersOnline').innerHTML += '<li class="list-group-item list-group-item-action" onclick="selectUserForConversation()" id="'+data.customers[i].uId+'"><a href="#"><span class="glyphicon glyphicon-user"></span>'+data.customers[i].userName+'</a></li>';
+			document.getElementById('waitingUsersList').innerHTML = ''+ data.totalWaitingUsers;
+		}
 	});
 	
 	socket.on('userExists', function(data) {
@@ -449,6 +462,7 @@
 		$("#usersOnline").removeClass("disabledbutton");
 		$("#chatbox").hide("slow");
 		socket.emit('unsubscribe', { uId : currentCustomerUid, userName : currentCustomerName, userType : 'customer'});
+		socket.emit('userWaitingOnline', {});
 	}
 	
 	function onLogOut()
@@ -488,6 +502,11 @@
 		alert('windowClose method called');
 		endChat();
 	}
+	
+	$(window).on('load', function() {
+		alert('window load');
+		socket.emit('userWaitingOnline', {});
+	})
 	
 </script>
 <% } %>

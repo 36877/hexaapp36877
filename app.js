@@ -32,7 +32,7 @@
 	
 	io.sockets.on('connection', function(socket) {
 
-		socket.on('subscribe', function(data) { 
+		socket.on('subscribe', function(data) {
 			
 			socket.join(data.uId);
 			
@@ -68,7 +68,7 @@
 							
 							if(index > -1){
 								customers.splice(index, 1);
-								io.sockets.emit('userLeft', {uId : data.uId, totalWaitingUsers : customers.length} );
+								io.sockets.emit('userLeft', {uId : data.uId, customers: customers, totalWaitingUsers : customers.length} );
 								
 								console.log('\nAfter unsubscribe :');
 								console.log('\n Customers :');
@@ -132,7 +132,7 @@
 		
 		socket.on('setUserName', function(data) {
 			var uId = generateId();
-			
+			console.log('test'+JSON.stringify(data));
 			if(data.userType === 'agent'){
 				if(agents.indexOf(data.userName) > -1) {
 					socket.emit('userExists',  { errorMsg : 'Agent Username already exists. Please try again.'});
@@ -164,7 +164,8 @@
 		});
 		
 		socket.on('userWaitingOnline', function(data) {
-			io.sockets.emit('userWaitingOnline1', {uId : data.uId, userName: data.userName, totalWaitingUsers : customers.length} );
+			console.log("Data.......", JSON.stringify(data));
+			io.sockets.emit('userWaitingOnline1', {uId : data.uId, userName: data.userName, customers : customers , totalWaitingUsers : customers.length} );
 		})
 		
 		socket.on('msg', function(data) {
