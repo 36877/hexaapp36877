@@ -13,6 +13,7 @@
 	var bodyParser = require('body-parser');
 	var urlencodedParser = bodyParser.urlencoded({extended:true});
 	var ioClient = require('socket.io-client')('http://localhost:3000');
+	var port = process.env.PORT || 5000;
 	
 	var mainController = require('./controller/mainController');
 	
@@ -24,6 +25,7 @@
 	usersWaitingForAgents = [];
 	usersConversationInPgrs = [];
 	
+	app.use(bodyParser.json());
 	app.set('view engine','ejs');
 	app.use(express.static(__dirname + '/public'));	
 	app.use(session({secret: 'ssshhhhh'}));
@@ -191,7 +193,7 @@
 	/* ======================================  API Part starts here  ================================================ */
 	app.post('/api/setCustomerName', function (req, res) {
 		
-		//console.log( 'Request object: '+req.body.userName);
+		console.log( 'Request object: '+req.body.userName);
 		ioClient.emit('setUserName', {"userName" : "nivethak", "userType" : "customer"});
 		ioClient.emit('userWaitingOnline', {"userName" : "sdgsdf", "userType" : "sdg"});
 		
@@ -201,6 +203,7 @@
 		})
 	})
 
-	server.listen(3000,function(req,res){
-		console.log('\nServer Running on port 3000 - http://localhost:3000/');
-	});
+	console.log("Server Running at Port : " + port);
+	app.listen(port, function () {
+		console.log('Listening my app on  PORT: ' + port);
+	}); 
