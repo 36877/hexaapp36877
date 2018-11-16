@@ -400,6 +400,7 @@
 	
 	socket.on('userWaitingOnline1', function(data){
 		//alert('users list updated');
+		console.log("im inside userWaitingOnline1");
 		var customersLength = data.customers.length;
 		document.getElementById('usersOnline').innerHTML = '';
 		

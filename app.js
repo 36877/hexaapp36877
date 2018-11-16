@@ -10,6 +10,9 @@
 	var server = http.createServer(app);
 	var session = require('express-session');
 	var io = require('socket.io').listen(server);
+	var bodyParser = require('body-parser');
+	var urlencodedParser = bodyParser.urlencoded({extended:true});
+	var ioClient = require('socket.io-client')('http://localhost:3000');
 	
 	var mainController = require('./controller/mainController');
 	
@@ -183,6 +186,20 @@
 		};
 		return (S4() + S4() + "-" + S4() + "-" + S4() + "-" + S4() + "-" + S4() + S4() + S4());
 	}
+	
+		
+	/* ======================================  API Part starts here  ================================================ */
+	app.post('/api/setCustomerName', function (req, res) {
+		
+		//console.log( 'Request object: '+req.body.userName);
+		ioClient.emit('setUserName', {"userName" : "nivethak", "userType" : "customer"});
+		ioClient.emit('userWaitingOnline', {"userName" : "sdgsdf", "userType" : "sdg"});
+		
+		res.status(200).send({
+			success: 'true',
+			message: 'setUserName successfully triggered'
+		})
+	})
 
 	server.listen(3000,function(req,res){
 		console.log('\nServer Running on port 3000 - http://localhost:3000/');

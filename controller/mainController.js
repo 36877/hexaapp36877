@@ -1,19 +1,20 @@
-	var express = require('express');
-	var http = require('http');
-	var app = express();
-	var bodyParser = require('body-parser');
-	var session = require('express-session');
-	var urlencodedParser = bodyParser.urlencoded({extended:true});
-	var io = require('socket.io-client')('http://localhost:3000');
-	
-	var MongoClient = require('mongodb').MongoClient;
-	var url = 'mongodb://localhost:27017/hexalivechat';
-	var sess;
-	
-	app.use(bodyParser.json());
-	app.use(session({secret: 'ssshhhhh'}));
-	app.use(bodyParser.json());
-	app.use(urlencodedParser);
+
+    var express = require('express');
+    var http = require('http');
+    var app = express();
+    var bodyParser = require('body-parser');
+    var session = require('express-session');
+    var urlencodedParser = bodyParser.urlencoded({extended:true});
+    var io = require('socket.io-client')('http://localhost:3000');
+    
+    var MongoClient = require('mongodb').MongoClient;
+    var url = 'mongodb://localhost:27017/hexalivechat';
+    var sess;
+    
+    app.use(bodyParser.json());
+    app.use(session({secret: 'ssshhhhh'}));
+    app.use(bodyParser.json());
+    app.use(urlencodedParser); 
 
 	/* Customer facing routes */
 	module.exports = (function(app){
@@ -104,18 +105,5 @@
 			}
 		});
 	});
-	
-	/* ======================================  API Part starts here  ================================================ */
-	app.post('/api/setCustomerName', function (req, res) {
-		
-		// console.log( 'Request object: '+req.body.userName);
-		io.emit('setUserName', {userName : "nivethak", userType : "customer"});
-		io.emit('userWaitingOnline', {"userName" : "sdgsdf", "userType" : "sdg"});
-		
-		res.status(200).send({
-			success: 'true',
-			message: 'setUserName successfully triggered'
-		})
-	})
 	
 });
