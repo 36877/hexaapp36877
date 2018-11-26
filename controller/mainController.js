@@ -30,20 +30,22 @@
 	// Login TO DB ==================================================================
 	app.post('/admin/dashbrd',urlencodedParser,function(req, res){
 		MongoClient.connect(url, function(err, db) {
-			db.collection('adminuser').findOne({ name: req.body.uname}, function(err, user) {
-			if(err) {
-				console.log(err);
-				}else {
-					if(user ===null){
-						res.end("Login invalid");
-					} else if (user.name === req.body.uname && user.pass === req.body.pass){
-						res.render('admin/dashboard',{loginData:user});
-					} else {
-						console.log("Credentials wrong");
-						res.end("Login invalid");
-					}
-				}
-			});
+
+			res.render('admin/dashboard',{loginData:user});
+			// db.collection('adminuser').findOne({ name: req.body.uname}, function(err, user) {
+			// if(err) {
+			// 	console.log(err);
+			// 	}else {
+			// 		if(user ===null){
+			// 			res.end("Login invalid");
+			// 		} else if (user.name === req.body.uname && user.pass === req.body.pass){
+			// 			res.render('admin/dashboard',{loginData:user});
+			// 		} else {
+			// 			console.log("Credentials wrong");
+			// 			res.end("Login invalid");
+			// 		}
+			// 	}
+			// });
 		});
 	});	
 	
@@ -62,24 +64,24 @@
 	app.post('/agent/dashbrd',urlencodedParser,function(req, res){
 		
 		sess = req.session;
-		
-		MongoClient.connect(url, function(err, db) {
-			db.collection('agents').findOne({ name: req.body.uname}, function(err, user) {
-				if(err)	{
-					console.log(err);
-				}else {
-					if(user ===null){
-						res.end("Login invalid");
-					}else if (user.name === req.body.uname && user.pass === req.body.pass){
-						sess.uname = req.body.uname;
-						res.render('agent/dashbrd',{uname: sess.uname});
-					} else {
-						console.log("Credentials wrong");
-						res.end("Login invalid");
-					}
-				}	
-			});
-		});
+		res.render('agent/dashbrd',{uname: sess.uname});
+		// MongoClient.connect(url, function(err, db) {
+		// 	db.collection('agents').findOne({ name: req.body.uname}, function(err, user) {
+		// 		if(err)	{
+		// 			console.log(err);
+		// 		}else {
+		// 			if(user ===null){
+		// 				res.end("Login invalid");
+		// 			}else if (user.name === req.body.uname && user.pass === req.body.pass){
+		// 				sess.uname = req.body.uname;
+		// 				res.render('agent/dashbrd',{uname: sess.uname});
+		// 			} else {
+		// 				console.log("Credentials wrong");
+		// 				res.end("Login invalid");
+		// 			}
+		// 		}	
+		// 	});
+		// });
 	});
 	
 	/* ==================================== agent routes (get) ======================== */
