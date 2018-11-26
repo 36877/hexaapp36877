@@ -33,8 +33,8 @@
 	mainController(app);
 	
 	io.set('log level', 2);
-	//io.set('transports', [ 'websocket', 'polling' ]);
-	io.connect({transports: ['websocket']});
+	io.set('transports', [ 'websocket', 'polling' ]);
+	//io.connect({transports: ['websocket']});
 	
 	io.sockets.on('connection', function(socket) {
 
