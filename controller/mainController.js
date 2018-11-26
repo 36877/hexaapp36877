@@ -54,7 +54,7 @@
 		sess = req.session;
 		
 		if(sess.uname) {
-			res.redirect('/dashbrd');
+			res.redirect('agent/dashbrd');
 		} else {
 			res.render('agent/login');
 		}
@@ -90,7 +90,7 @@
 		session1 = req.session;
 		
 		if(session1.uname) {
-			res.render('dashbrd', {uname:session1.uname});
+			res.render('/agent/dashbrd', {uname:session1.uname});
 		} else {
 			res.redirect('/agent');
 		}
