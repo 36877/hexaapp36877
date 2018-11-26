@@ -1,7 +1,7 @@
 // API to integrate with chat bot
 	
 	var express = require('express');
-	var socket = io("http://localhost/3000/");
+	var socket = io("https://agentlivechat.herokuapp.com/");
 	var app = express();
 
 	app.post('/setCustomerName', function (req, res) {

@@ -12,7 +12,7 @@
 	var io = require('socket.io').listen(server);
 	var bodyParser = require('body-parser');
 	var urlencodedParser = bodyParser.urlencoded({extended:true});
-	var ioClient = require('socket.io-client')('http://localhost:3000');
+	var ioClient = require('socket.io-client')('https://agentlivechat.herokuapp.com/');
 	var port = process.env.PORT || 5000;
 	
 	var mainController = require('./controller/mainController');

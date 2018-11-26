@@ -5,7 +5,7 @@
     var bodyParser = require('body-parser');
     var session = require('express-session');
     var urlencodedParser = bodyParser.urlencoded({extended:true});
-    var io = require('socket.io-client')('http://localhost:3000');
+    var io = require('socket.io-client')('https://agentlivechat.herokuapp.com/');
     
     var MongoClient = require('mongodb').MongoClient;
     var url = 'mongodb://localhost:27017/hexalivechat';
